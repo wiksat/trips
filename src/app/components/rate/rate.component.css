@@ -1,0 +1,19 @@
+/* .star {
+  content: url("/assets/images/star.png");
+}
+.star-ful {
+  content: url("/assets/images/star-ful.png");
+} */
+.stars {
+  display: flex;
+}
+p,
+div,
+img {
+  display: inline;
+}
+p {
+  padding: 0;
+  margin: 0;
+  margin-right: 5px;
+}

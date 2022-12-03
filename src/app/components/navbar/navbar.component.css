@@ -1,0 +1,27 @@
+.out {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: black;
+  justify-content: center;
+}
+
+.item {
+  font-size: 2em;
+  padding: 0.2em;
+  background-color: black;
+  color: gray;
+  margin: 0.2em 0.6em;
+  cursor: pointer;
+  transition: 300ms ease all;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.item:hover {
+  background-color: rgb(77, 77, 77);
+  color: white;
+}

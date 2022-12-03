@@ -1,0 +1,52 @@
+<div class="outer-form">
+  <h2>Dodaj wycieczkę</h2>
+  <form [formGroup]="tripAddForm">
+    <div>
+      <label for="name">Nazwa wycieczki:</label>
+      <input id="name" type="text" formControlName="tripName" />
+    </div>
+
+    <div>
+      <label for="country">Kraj:</label>
+      <input id="country" type="text" formControlName="tripCountry" />
+    </div>
+
+    <div>
+      <label for="amount">Liczba miejsc:</label>
+      <input id="amount" type="number" min="1" formControlName="tripAmount" />
+    </div>
+
+    <div>
+      <label for="startDate">Data początku:</label>
+      <input id="startDate" type="date" formControlName="tripStartDate" />
+    </div>
+
+    <div>
+      <label for="endDate">Data końca:</label>
+      <input id="endDate" type="date" formControlName="tripEndDate" />
+    </div>
+
+    <div>
+      <label for="price">Cena:</label>
+      <input id="price" type="number" min="1" formControlName="tripPrice" />
+    </div>
+
+    <div>
+      <label for="desc">Opis:</label>
+      <input id="desc" type="text" formControlName="tripDesc" />
+    </div>
+
+    <div>
+      <label for="img">Ścieżka do zdj:</label>
+      <input id="img" type="text" formControlName="tripImg" />
+    </div>
+    <div>
+      <label for="currency">Waluta:</label>
+      <input id="currency" type="text" formControlName="tripCurrency" />
+    </div>
+
+    <button type="submit" (click)="submitForm()">Dodaj</button>
+    <p *ngIf="showError">Wprowadź poprawne dane!</p>
+    <p *ngIf="showOk">Wycieczka została dodana!</p>
+  </form>
+</div>
