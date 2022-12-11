@@ -1,0 +1,44 @@
+<div class="outer-form">
+  <h2>Dodaj opinię:</h2>
+  <form [formGroup]="tripReview">
+    <div>
+      <label for="nick">Nick:</label>
+      <input id="nick" type="text" formControlName="nick" />
+    </div>
+
+    <div>
+      <label for="name">Nazwa wycieczki:</label>
+      <input id="name" type="text" formControlName="name" />
+    </div>
+
+    <div>
+      <label for="review">Treść recenzji</label>
+      <textarea
+        id="review"
+        type="text"
+        formControlName="review"
+        cols="60"
+        rows="5"
+      ></textarea>
+    </div>
+
+    <div>
+      <label for="date">Data wycieczki:</label>
+      <input id="date" type="date" formControlName="date" />
+    </div>
+
+    <!-- <button type="submit" [disabled]="!tripReview.valid" (click)="submitForm()"> -->
+    <button type="submit" (click)="submitForm()">Dodaj recenzję</button>
+    <div class="errors" *ngIf="clicked">
+      <div *ngIf="!tripReview.get('nick')!.valid">
+        Nick powinien mieć 1+ znaków
+      </div>
+      <div *ngIf="!tripReview.get('name')!.valid">
+        Nazwa wycieczki powinna mieć 1+ znaków
+      </div>
+      <div *ngIf="!tripReview.get('review')!.valid">
+        Recenzja powinna zawierać od 50 do 500 znaków
+      </div>
+    </div>
+  </form>
+</div>

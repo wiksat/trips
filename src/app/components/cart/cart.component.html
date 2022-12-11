@@ -1,0 +1,15 @@
+<!-- <p>cart works!</p> -->
+<a routerLink="/trips"><---Powrót do wycieczek</a>
+<h1>Ilość elementów: {{ getAmount() }}</h1>
+<h2>Suma: {{ getCartCost() }}</h2>
+<h5 *ngIf="cart.length == 0">(brak elementów w koszyku)</h5>
+<div *ngIf="cart.length > 0">
+  <h1>W koszyku znajduje się:</h1>
+  <div *ngFor="let item of cart; index as idx">
+    <h3>
+      {{ idx + 1 }}. {{ item.name }} -
+      {{ item.price | currency : item.currency }}
+    </h3>
+  </div>
+  <button>DOKONAJ ZAKUP</button>
+</div>
