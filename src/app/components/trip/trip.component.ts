@@ -20,6 +20,7 @@ export class TripComponent implements OnInit {
   highValue: number;
   options: Options;
   showAddScreen: boolean = false;
+  fitryshow: boolean = true;
   cart: Trip[] = [];
   constructor(
     private service: JsonGetService,
@@ -35,12 +36,21 @@ export class TripComponent implements OnInit {
       for (let i = 0; i < this.tripsArray.length; i++) {
         this.tripsArray[i].howManyChose = 0;
       }
+      this.cart = this.cartService.getCart();
+      for (let i = 0; i < this.cart.length; i++) {
+        for (let j = 0; j < this.tripsArray.length; j++) {
+          if (this.cart[i].id == this.tripsArray[j].id) {
+            this.tripsArray[j].howManyChose += 1;
+            break;
+          }
+        }
+      }
 
-      this.value = this.getMin();
-      this.highValue = this.getMax();
+      this.value = this.getMinOfAll();
+      this.highValue = this.getMaxOfAll();
       this.options = {
-        floor: this.getMin(),
-        ceil: this.getMax(),
+        floor: this.getMinOfAll(),
+        ceil: this.getMaxOfAll(),
       };
 
       // console.log(this.getDistinctCountry());
@@ -123,14 +133,22 @@ export class TripComponent implements OnInit {
     if (trip.amount - trip.howManyChose > 0) {
       trip.howManyChose++;
       this.cart.push(trip);
+      this.cartService.setCart(this.cart);
     }
   }
   downClick(trip: Trip) {
     if (trip.howManyChose > 0) {
       trip.howManyChose--;
-      const index = this.cart.indexOf(trip);
+      var index = -1;
+      for (let i = 0; i < this.cart.length; i++) {
+        if (trip.id == this.cart[i].id) {
+          index = i;
+        }
+      }
+      // console.log(trip, this.cart);
       if (index > -1) this.cart.splice(index, 1);
     }
+    this.cartService.setCart(this.cart);
   }
   getMax(): number {
     let max = 0;
@@ -156,6 +174,26 @@ export class TripComponent implements OnInit {
     }
     return min;
   }
+
+  getMaxOfAll(): number {
+    let max = 0;
+    for (let i = 0; i < this.tripsArray.length; i++) {
+      if (this.tripsArray[i].price > max) {
+        max = this.tripsArray[i].price;
+      }
+    }
+    return max;
+  }
+  getMinOfAll(): number {
+    let min = 9999999999999;
+    for (let i = 0; i < this.tripsArray.length; i++) {
+      if (this.tripsArray[i].price < min) {
+        min = this.tripsArray[i].price;
+      }
+    }
+    return min;
+  }
+
   formSubmitEventHandler(trip: Trip) {
     this.tripsArray.push(trip);
     // var copy = [...this.distinctCountryArray];
@@ -169,22 +207,34 @@ export class TripComponent implements OnInit {
     this.currentCountryArray.push(
       this.distinctCountryArray[this.distinctCountryArray.length - 1]
     );
-    console.log('trip');
+    // console.log('trip');
   }
   remove(trip: Trip) {
+    // console.log('removeeeee', trip, this.cart);
+    this.fb.removeTrip(trip.id);
     for (var i = 0; i < this.tripsArray.length; i++) {
       if (this.tripsArray[i] == trip) {
         this.tripsArray.splice(i, 1);
-        return;
+        // return;
       }
     }
-    let index = this.cart.indexOf(trip);
-    while (index >= 0) {
-      this.cart.splice(index, 1);
-      index = this.cart.indexOf(trip);
+    var index = 0;
+    while (index > -1) {
+      index = -1;
+      for (let i = 0; i < this.cart.length; i++) {
+        if (trip.id == this.cart[i].id) {
+          index = i;
+          break;
+        }
+      }
+      if (index > -1) this.cart.splice(index, 1);
     }
-  }
 
+    this.cartService.setCart(this.cart);
+  }
+  filtyChange() {
+    this.fitryshow = !this.fitryshow;
+  }
   ratingEventHandler(trip: Trip, ev: any) {
     trip.amountVote++;
     trip.amountPoints += ev + 1;

@@ -1,5 +1,41 @@
-<div class="out">
-  <a routerLink="/"><div class="item">Home</div></a>
-  <a routerLink="/trips"><div class="item">Wycieczki</div></a>
-  <a routerLink="/about"><div class="item">About</div></a>
+<div class="box">
+  <a routerLink="/cart"
+    ><div class="cart">
+      <div>
+        <img src="/assets/images/shopping-cart.png" width="50px" alt="" />
+      </div>
+      <p>{{ ile() }}</p>
+    </div></a
+  >
+  <div class="menu-horizontal">
+    <a routerLink="/"><div class="item">Home</div></a>
+    <a routerLink="/trips"><div class="item">Wycieczki</div></a>
+    <a routerLink="/about"><div class="item">About</div></a>
+    <a routerLink="/add"><div class="item">Add</div></a>
+  </div>
+
+  <div class="menu-vertical">
+    <div class="container">
+      <input class="checkbox" type="checkbox" name="" id="" />
+      <div class="hamburger-lines">
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+      <div class="menu-items">
+        <li>
+          <a routerLink="/"><div class="item">Home</div></a>
+        </li>
+        <li>
+          <a routerLink="/trips"><div class="item">Wycieczki</div></a>
+        </li>
+        <li>
+          <a routerLink="/about"><div class="item">About</div></a>
+        </li>
+        <li>
+          <a routerLink="/add"><div class="item">Add</div></a>
+        </li>
+      </div>
+    </div>
+  </div>
 </div>

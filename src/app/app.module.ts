@@ -18,6 +18,9 @@ import { AboutComponent } from './components/about/about.component';
 import { AngularFireModule } from '@angular/fire/compat';
 import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { ReviewComponent } from './components/review/review.component';
+import { CartComponent } from './components/cart/cart.component';
+import { HistoryComponent } from './history/history.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +34,9 @@ import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
     HomePageComponent,
     SingleTripComponent,
     AboutComponent,
+    ReviewComponent,
+    CartComponent,
+    HistoryComponent,
   ],
   imports: [
     BrowserModule,

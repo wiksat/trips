@@ -1,5 +1,6 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FireBaseServiceService } from 'src/app/services/fire-base-service.service';
 import { Validators } from '@angular/forms';
 import { Trip } from '../../ITrip';
 @Component({
@@ -8,7 +9,7 @@ import { Trip } from '../../ITrip';
   styleUrls: ['./add-trip.component.css'],
 })
 export class AddTripComponent implements OnInit {
-  constructor() {}
+  constructor(private fb: FireBaseServiceService) {}
 
   ngOnInit(): void {}
 
@@ -59,6 +60,7 @@ export class AddTripComponent implements OnInit {
       return;
     }
     let newTrip: Trip = {
+      id: this.fb.getNextid(),
       img: this.tripAddForm.get('tripImg')!.value!,
       name: this.tripAddForm.get('tripName')!.value!,
       country: this.tripAddForm.get('tripCountry')!.value!,
@@ -72,8 +74,9 @@ export class AddTripComponent implements OnInit {
       amountPoints: 0,
       amountVote: 0,
     };
-    console.log(newTrip);
-    this.formSubmitEvent.emit(newTrip);
+    // console.log(newTrip);
+    // this.formSubmitEvent.emit(newTrip);
+    this.fb.addTrip(newTrip);
     this.showError = false;
     this.showOk = true;
     this.tripAddForm.reset();

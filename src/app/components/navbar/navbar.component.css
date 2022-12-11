@@ -1,11 +1,23 @@
-.out {
-  display: flex;
-  flex-direction: row;
+.box {
   width: 100%;
   background-color: black;
+  height: 70px;
   justify-content: center;
+  display: flex;
+  position: sticky;
+  top: 0;
+  z-index: 11;
 }
-
+.menu-horizontal {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  margin-right: 5%;
+}
+.menu-vertical {
+  display: none;
+  margin-right: 5%;
+}
 .item {
   font-size: 2em;
   padding: 0.2em;
@@ -24,4 +36,106 @@ a {
 .item:hover {
   background-color: rgb(77, 77, 77);
   color: white;
+}
+.checkbox {
+  position: absolute;
+  display: block;
+  height: 32px;
+  width: 32px;
+  top: 15px;
+  right: 5%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+.hamburger-lines {
+  display: block;
+  height: 26px;
+  width: 32px;
+  position: absolute;
+  top: 20px;
+  right: 5%;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.hamburger-lines .line {
+  display: block;
+  height: 4px;
+  width: 100%;
+  border-radius: 10px;
+  background: white;
+}
+.hamburger-lines .line1 {
+  transform-origin: 0% 0%;
+  transition: transform 0.4s ease-in-out;
+}
+.hamburger-lines .line2 {
+  transition: transform 0.2s ease-in-out;
+}
+.hamburger-lines .line3 {
+  transform-origin: 0% 100%;
+  transition: transform 0.4s ease-in-out;
+}
+input[type="checkbox"]:checked ~ .menu-items {
+  transform: translateX(-100vw);
+}
+input[type="checkbox"]:checked ~ .hamburger-lines .line1 {
+  transform: rotate(45deg);
+}
+input[type="checkbox"]:checked ~ .hamburger-lines .line2 {
+  transform: scaleY(0);
+}
+input[type="checkbox"]:checked ~ .hamburger-lines .line3 {
+  transform: rotate(-45deg);
+}
+li {
+  list-style: none;
+}
+.menu-items {
+  display: flex;
+  position: fixed;
+  top: 70px;
+  right: -100vw;
+  background-color: black;
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s ease-in-out;
+  text-align: center;
+  overflow: hidden;
+  z-index: 10;
+}
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart {
+  /* background-color: white; */
+  position: absolute;
+  left: 10px;
+  top: 5px;
+}
+.cart div {
+  border-radius: 50px;
+  background-color: white;
+  display: inline-block;
+}
+.cart p {
+  display: inline;
+  background-color: white;
+  border-radius: 50px;
+}
+@media (max-width: 800px) {
+  .menu-horizontal {
+    display: none;
+  }
+  .menu-vertical {
+    display: block;
+  }
+  .item {
+    border-top: 1px solid gray;
+  }
 }

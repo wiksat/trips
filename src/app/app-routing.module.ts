@@ -5,11 +5,13 @@ import { TripComponent } from './components/trip/trip.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { SingleTripComponent } from './components/single-trip/single-trip.component';
 import { AboutComponent } from './components/about/about.component';
+import { CartComponent } from './components/cart/cart.component';
+import { AddTripComponent } from './components/add-trip/add-trip.component';
 const routes: Routes = [
   { path: 'trips', component: TripComponent },
   { path: 'trips/:id', component: SingleTripComponent },
-  // {path: 'addnewdish', component: DishAddComponent},
-  // {path: 'cart', component: AboutComponent},
+  { path: 'add', component: AddTripComponent },
+  { path: 'cart', component: CartComponent },
   { path: 'about', component: AboutComponent },
   { path: '', component: HomePageComponent },
   { path: '**', component: PageNotFoundComponent },

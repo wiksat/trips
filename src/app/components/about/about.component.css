@@ -1,0 +1,10 @@
+h1,
+h2,
+p,
+.info {
+  text-align: center;
+}
+.out {
+  display: flex;
+  justify-content: center;
+}

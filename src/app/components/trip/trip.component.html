@@ -1,7 +1,8 @@
 <h1>Biuro podróży WikSat</h1>
-<button class="add" (click)="changeShowScreen()">Dodaj wycieczkę</button>
+<button class="filtry" (click)="filtyChange()">Filty</button>
+<!-- <button class="add" (click)="changeShowScreen()">Dodaj wycieczkę</button> -->
 <div class="flex-container" *ngIf="tripsArray != undefined">
-  <div class="filtering">
+  <div class="filtering" *ngIf="fitryshow">
     <div class="filter-inner">
       <div
         class="current"
@@ -19,8 +20,8 @@
         [(value)]="value"
         [(highValue)]="highValue"
         [options]="{
-          floor: this.getMin(),
-          ceil: this.getMax()
+          floor: this.getMinOfAll(),
+          ceil: this.getMaxOfAll()
         }"
       ></ngx-slider>
       <h4>Ocena:</h4>
@@ -112,13 +113,13 @@
         <p class="date">{{ trip.startDate }} --> {{ trip.endDate }}</p>
         <p>Pozostało miejsc: {{ trip.amount - trip.howManyChose }}</p>
         <p>Wybrano: {{ trip.howManyChose }}</p>
-        <p class="price">{{ trip.price | currency: trip.currency }}</p>
-        <app-rate
+        <p class="price">{{ trip.price | currency : trip.currency }}</p>
+        <!-- <app-rate
           class="ratee"
           (ratingChanged)="ratingEventHandler(trip, $event)"
           [amountPoints]="trip.amountPoints"
           [amountVote]="trip.amountVote"
-        ></app-rate>
+        ></app-rate> -->
         <div class="buttons">
           <button [disabled]="trip.howManyChose == 0" (click)="downClick(trip)">
             -
@@ -146,9 +147,9 @@
       </div>
     </div>
   </div>
-  <app-add-trip
+  <!-- <app-add-trip
     *ngIf="showAddScreen"
     class="adding"
     (formSubmitEvent)="formSubmitEventHandler($event)"
-  ></app-add-trip>
+  ></app-add-trip> -->
 </div>

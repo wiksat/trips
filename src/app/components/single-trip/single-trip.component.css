@@ -1,0 +1,45 @@
+.inner {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+a {
+  display: inline;
+}
+.ctrip {
+  border: 2px solid black;
+  border-radius: 6px;
+  padding: 20px;
+  -webkit-box-shadow: 0px 0px 28px -2px rgba(66, 68, 90, 1);
+  -moz-box-shadow: 0px 0px 28px -2px rgba(66, 68, 90, 1);
+  box-shadow: 0px 0px 28px -2px rgba(66, 68, 90, 1);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+.np {
+  cursor: pointer;
+  border-radius: 25px;
+  background-color: black;
+  color: white;
+  padding: 20px;
+  margin-top: 20px;
+  display: inline-block;
+}
+.buttonsToPhoto {
+}
+img {
+  max-width: 664px;
+  max-height: 443px;
+
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+.cont {
+  float: left;
+}
+.one-review {
+  border: 1px solid black;
+}
