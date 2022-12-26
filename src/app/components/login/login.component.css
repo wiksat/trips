@@ -1,0 +1,22 @@
+.out {
+  display: flex;
+  justify-content: center;
+}
+.in {
+  width: 30%;
+  min-width: 137px;
+  position: relative;
+}
+input {
+  margin-bottom: 10px;
+  /* margin-left: 20px; */
+  width: 100%;
+}
+h2,
+label {
+  text-align: center;
+}
+button {
+  float: right;
+  margin-top: 10px;
+}

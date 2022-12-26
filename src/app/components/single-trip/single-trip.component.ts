@@ -5,6 +5,7 @@ import { Trip } from '../../ITrip';
 import { ActivatedRoute } from '@angular/router';
 import { first, Subscription } from 'rxjs';
 import { Review } from '../../IReview';
+import { AuthService } from '../../services/auth.service';
 @Component({
   selector: 'app-single-trip',
   templateUrl: './single-trip.component.html',
@@ -14,17 +15,46 @@ export class SingleTripComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private fb: FireBaseServiceService,
-    private cartService: CartService
+    private cartService: CartService,
+    public auth: AuthService
   ) {}
-
+  history: any | undefined;
   private subscription: Subscription | undefined;
   id: number = -1;
+  idis: any = [];
   selected: number = 0;
   currentTrip: Trip;
   reviews: Review[] = [];
   cart: Trip[] = [];
   howManyChose: number = 0;
-  ngOnInit(): void {
+  czy: boolean = true;
+  userData: any;
+  async ngOnInit(): Promise<void> {
+    const authenticated = await this.auth.getCurrentUser();
+    this.userData = authenticated as any;
+    if (this.userData != null) {
+      this.fb
+        .getOrderHistory(this.userData.uid)
+        .pipe(first())
+        .subscribe((data: any) => {
+          if (data) {
+            this.history = Object.values(data);
+            console.log(this.history);
+            this.history.forEach((element: { trips: { array: any[] } }) => {
+              var temp = element.trips as any;
+              temp.forEach((element: any) => {
+                // this.idis.push(element);
+                if (parseInt(element) == this.id) {
+                  this.czy = false;
+                  // console.log('ajdiiiiiiiiiiiii', this.id);
+                }
+              });
+              // console.log(this.idis);
+            });
+          }
+        });
+    }
+
     this.subscription = this.route.params.subscribe((params) => {
       this.id = params['id'];
       this.fb
@@ -74,7 +104,7 @@ export class SingleTripComponent implements OnInit {
     );
   }
   addReview(newReview: any) {
-    console.log(newReview);
+    // console.log(newReview);
     this.reviews.push(newReview);
   }
   upClick(trip: Trip) {
@@ -97,5 +127,26 @@ export class SingleTripComponent implements OnInit {
       if (index > -1) this.cart.splice(index, 1);
     }
     this.cartService.setCart(this.cart);
+  }
+  isTime(trip: Trip): boolean {
+    var data = trip.startDate;
+    data = data.split('-');
+    var tempDate = new Date(data[0] + '/' + data[1] + '/' + data[2]);
+
+    var prevWeek = new Date(
+      tempDate.getFullYear(),
+      tempDate.getMonth(),
+      tempDate.getDate() - 30
+    );
+    // console.log(tempDate);
+    // console.log(prevWeek);
+
+    var currentDate = new Date();
+    // console.log(currentDate);
+    if (prevWeek < currentDate && tempDate > currentDate) {
+      return true;
+    }
+
+    return false;
   }
 }

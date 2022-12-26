@@ -3,7 +3,9 @@ import { JsonGetService } from 'src/app/services/json-get.service';
 import { FireBaseServiceService } from 'src/app/services/fire-base-service.service';
 import { Options } from '@angular-slider/ngx-slider';
 import { CartService } from 'src/app/services/cart.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { Trip } from '../../ITrip';
+
 @Component({
   selector: 'app-trip',
   templateUrl: './trip.component.html',
@@ -22,13 +24,21 @@ export class TripComponent implements OnInit {
   showAddScreen: boolean = false;
   fitryshow: boolean = true;
   cart: Trip[] = [];
+  statusArray: any = [];
   constructor(
-    private service: JsonGetService,
+    // private service: JsonGetService,
     private fb: FireBaseServiceService,
-    private cartService: CartService
+    private cartService: CartService,
+    private auth: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.auth.getAuthenticated().subscribe((res: any) => {
+      if (res == null) {
+        this.tripZero();
+        this.cartService.setCart([]);
+      }
+    });
     this.fb.getData().subscribe((res: any) => {
       console.log(res);
       this.tripsArray = res;
@@ -55,6 +65,7 @@ export class TripComponent implements OnInit {
 
       // console.log(this.getDistinctCountry());
       this.getDistinctCountry();
+      this.statusArray = [0, 1, 2];
       this.currentCountryArray = [...this.distinctCountryArray];
       this.currentStarArray = [0, 1, 2, 3, 4, 5];
       this.currentStartDate = '1970-01-01';
@@ -66,7 +77,11 @@ export class TripComponent implements OnInit {
     this.cartService.setCart(this.cart);
     // this.dishesSub?.unsubscribe();
   }
-
+  tripZero() {
+    for (let i = 0; i < this.tripsArray.length; i++) {
+      this.tripsArray[i].howManyChose = 0;
+    }
+  }
   changeShowScreen() {
     this.showAddScreen = !this.showAddScreen;
   }
@@ -103,6 +118,19 @@ export class TripComponent implements OnInit {
       }
     }
     console.log(this.currentStarArray);
+  }
+  onChangeStatus(ev: any) {
+    if (ev.target.checked) {
+      this.statusArray.push(parseInt(ev.target.value));
+    } else {
+      for (var i = 0; i < this.statusArray.length; i++) {
+        if (this.statusArray[i] === parseInt(ev.target.value)) {
+          this.statusArray.splice(i, 1);
+          i--;
+        }
+      }
+    }
+    console.log(this.statusArray);
   }
   startChange(ev: any) {
     // console.log(ev.target.value);
@@ -196,14 +224,8 @@ export class TripComponent implements OnInit {
 
   formSubmitEventHandler(trip: Trip) {
     this.tripsArray.push(trip);
-    // var copy = [...this.distinctCountryArray];
+
     this.getDistinctCountry();
-    // for (let i = 0; i < this.distinctCountryArray.length; i++) {
-    //   console.log('inklud', copy.includes(this.distinctCountryArray[i]));
-    // }
-    // console.log(
-    //   this.distinctCountryArray[this.distinctCountryArray.length - 1]
-    // );
     this.currentCountryArray.push(
       this.distinctCountryArray[this.distinctCountryArray.length - 1]
     );
@@ -238,5 +260,23 @@ export class TripComponent implements OnInit {
   ratingEventHandler(trip: Trip, ev: any) {
     trip.amountVote++;
     trip.amountPoints += ev + 1;
+  }
+  isTime(trip: Trip): boolean {
+    var data = trip.startDate;
+    data = data.split('-');
+    var tempDate = new Date(data[0] + '/' + data[1] + '/' + data[2]);
+
+    var prevWeek = new Date(
+      tempDate.getFullYear(),
+      tempDate.getMonth(),
+      tempDate.getDate() - 30
+    );
+
+    var currentDate = new Date();
+    if (prevWeek < currentDate && tempDate > currentDate) {
+      return true;
+    }
+
+    return false;
   }
 }

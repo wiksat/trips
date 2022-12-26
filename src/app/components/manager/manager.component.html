@@ -1,0 +1,26 @@
+<h2>Manager mode</h2>
+<div class="out">
+  <div class="one" *ngIf="tripsArray != []">
+    <div class="center">
+      <h3>Edytuj wycieczki</h3>
+      <table>
+        <tr>
+          <th>Id</th>
+          <th>Nazwa</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let trip of tripsArray">
+          <td>{{ trip.id }}</td>
+          <td>{{ trip.name }}</td>
+          <td>
+            <button (click)="remove(trip)" class="button-accent">USUŃ</button>
+            <button routerLink="/modify/{{ trip.id }}" class="button-accent">
+              MODYFIKUJ
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <app-add-trip class="two"></app-add-trip>
+</div>

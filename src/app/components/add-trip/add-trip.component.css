@@ -1,5 +1,6 @@
-.outer-form {
+.out {
   margin: 0 auto;
+  width: 80%;
 }
 form {
   width: 100%;

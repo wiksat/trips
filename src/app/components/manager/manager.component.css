@@ -1,0 +1,22 @@
+.out {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+/* .edit {
+  display: block;
+} */
+.one,
+.two {
+  width: 40%;
+}
+.one {
+  display: flex;
+  justify-content: center;
+}
+@media only screen and (max-width: 880px) {
+  .one,
+  .two {
+    width: 80%;
+  }
+}

@@ -79,6 +79,38 @@
           (change)="endChange($event)"
         />
       </div>
+      <div>
+        <h4>Status:</h4>
+        <input
+          type="checkbox"
+          name="before"
+          id="status-before"
+          checked
+          (change)="onChangeStatus($event)"
+          value="0"
+        />
+        <label for="status-before">BEFORE</label>
+
+        <input
+          type="checkbox"
+          name="now"
+          id="status-now"
+          checked
+          (change)="onChangeStatus($event)"
+          value="1"
+        />
+        <label for="status-now">NOW</label>
+
+        <input
+          type="checkbox"
+          name="after"
+          id="status-after"
+          checked
+          (change)="onChangeStatus($event)"
+          value="2"
+        />
+        <label for="status-after">AFTER</label>
+      </div>
     </div>
   </div>
   <div class="main">
@@ -98,7 +130,8 @@
                 currentStartDate,
                 currentEndDate,
                 value,
-                highValue
+                highValue,
+                statusArray
               ]
       "
     >
@@ -107,7 +140,15 @@
       /></a>
 
       <div class="under-image">
-        <h4>{{ trip.name | uppercase }}</h4>
+        <h4>
+          {{ trip.name | uppercase }}
+          <div
+            class="kolko"
+            [ngStyle]="{
+              'background-color': isTime(trip) ? 'green' : 'yellow'
+            }"
+          ></div>
+        </h4>
         <p class="country">{{ trip.country | uppercase }}</p>
         <p>{{ trip.desc }}</p>
         <p class="date">{{ trip.startDate }} --> {{ trip.endDate }}</p>
@@ -135,15 +176,22 @@
               trip.amount - trip.howManyChose <= 3 &&
               trip.amount - trip.howManyChose > 1
             "
+            class="prawo"
           >
             Small amount
           </p>
-          <p style="color: red" *ngIf="trip.amount - trip.howManyChose == 1">
+          <p
+            style="color: red"
+            *ngIf="trip.amount - trip.howManyChose == 1"
+            class="prawo"
+          >
             Last minute
           </p>
-          <p *ngIf="trip.amount - trip.howManyChose == 0">Out of stock!!!</p>
+          <p *ngIf="trip.amount - trip.howManyChose == 0" class="prawo">
+            Out of stock!!!
+          </p>
         </div>
-        <button class="remove" (click)="remove(trip)">remove</button>
+        <!-- <button class="remove" (click)="remove(trip)">remove</button> -->
       </div>
     </div>
   </div>

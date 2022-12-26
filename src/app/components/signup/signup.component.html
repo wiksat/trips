@@ -1,0 +1,27 @@
+<div class="out">
+  <div class="in">
+    <h2>Zarejestruj się</h2>
+    <form [formGroup]="form">
+      <div>
+        <label for="name">Email:</label>
+        <input id="name" type="text" formControlName="email" />
+      </div>
+
+      <div>
+        <label for="country">Hasło:</label>
+        <input id="country" type="password" formControlName="password" />
+      </div>
+      <div>
+        <label for="country2">Powtórz hasło:</label>
+        <input id="country2" type="password" formControlName="password2" />
+      </div>
+
+      <button type="submit" (click)="submitForm()">Zarejestruj się!</button>
+      <p *ngIf="showError">
+        Wprowadzony adres email jest niepoprawny, lub hasło ma mniej niż 6
+        liter!
+      </p>
+      <p *ngIf="showOk">Wprowadzone dane są OK!</p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,45 @@
+<div class="out">
+  <div class="first" *ngIf="auth.userData != null">
+    <h2>Info o użytkowniku</h2>
+    <ul>
+      <li><strong>Email: </strong>{{ auth.userData.email }}</li>
+      <li>
+        <strong>Email confirmed: </strong>{{ auth.userData.emailVerified }}
+      </li>
+      <li><strong>UserID: </strong>{{ auth.userData.uid }}</li>
+      <li>
+        <strong>Account created: </strong
+        >{{ auth.userData.metadata.creationTime }}
+      </li>
+      <li>
+        <strong>Last successfull log in: </strong
+        >{{ auth.userData.metadata.lastSignInTime }}
+      </li>
+    </ul>
+  </div>
+  <div class="second" *ngIf="auth.userRoles != null">
+    <h2>Twoje uprawnienia</h2>
+    <ul>
+      <li><strong>Guest: </strong>{{ auth.userRoles.guest }}</li>
+      <li><strong>Client: </strong>{{ auth.userRoles.client }}</li>
+      <li><strong>Manager: </strong>{{ auth.userRoles.menager }}</li>
+      <li><strong>Admin: </strong>{{ auth.userRoles.admin }}</li>
+      <li><strong>Banned: </strong>{{ auth.userRoles.banned }}</li>
+    </ul>
+  </div>
+  <div class="third" *ngIf="auth.userRoles != null">
+    <h2>Twoja historia</h2>
+
+    <ul>
+      <li *ngFor="let trip of history">
+        <strong>Data: {{ trip.date }}</strong>
+        <ul>
+          <li *ngFor="let trip2 of trip.trips">
+            id:{{ trip2 }} - name:
+            <a routerLink="/trips/{{ trip2 }}">{{ getNames(trip2) }}</a>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</div>

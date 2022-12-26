@@ -1,4 +1,4 @@
-<div class="rate">
+<div class="rate" *ngIf="auth.userRoles != null">
   <div class="stars">
     <div *ngFor="let number of [0, 1, 2, 3, 4]">
       <img
@@ -16,7 +16,12 @@
         (click)="rattingApplied(number)"
       />
     </div>
-    <p>{{ this.amountPoints / this.amountVote | number: "1.2-2" }}</p>
-    <p *ngIf="alreadyVoted">Voted!</p>
+    <p>{{ this.amountPoints / this.amountVote | number : "1.2-2" }}</p>
+
+    <p *ngIf="alreadyVoted">Zagłosowano!</p>
+    <p *ngIf="czy">Nie możesz głosować!</p>
+    <div *ngIf="!czy">
+      <p *ngIf="this.auth.userRoles.banned">Jesteś zbanowany!</p>
+    </div>
   </div>
 </div>

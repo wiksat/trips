@@ -1,44 +1,53 @@
-<div class="outer-form">
+<div class="outer-form" *ngIf="userRoles != null && userData != null">
   <h2>Dodaj opinię:</h2>
-  <form [formGroup]="tripReview">
-    <div>
-      <label for="nick">Nick:</label>
-      <input id="nick" type="text" formControlName="nick" />
-    </div>
+  <h1 *ngIf="czy && !userRoles.menager">Nie możesz dawać opinii</h1>
 
-    <div>
-      <label for="name">Nazwa wycieczki:</label>
-      <input id="name" type="text" formControlName="name" />
-    </div>
+  <h1 *ngIf="!czy && userRoles.banned">Zostałeś zbanowany</h1>
 
-    <div>
-      <label for="review">Treść recenzji</label>
-      <textarea
-        id="review"
-        type="text"
-        formControlName="review"
-        cols="60"
-        rows="5"
-      ></textarea>
-    </div>
-
-    <div>
-      <label for="date">Data wycieczki:</label>
-      <input id="date" type="date" formControlName="date" />
-    </div>
-
-    <!-- <button type="submit" [disabled]="!tripReview.valid" (click)="submitForm()"> -->
-    <button type="submit" (click)="submitForm()">Dodaj recenzję</button>
-    <div class="errors" *ngIf="clicked">
-      <div *ngIf="!tripReview.get('nick')!.valid">
-        Nick powinien mieć 1+ znaków
+  <ng-container
+    *ngIf="(userRoles.banned == false && !czy) || userRoles.menager"
+  >
+    <form [formGroup]="tripReview">
+      <div>
+        <label>Nick:</label>
+        <!-- <input id="nick" type="text" formControlName="nick" /> -->
+        {{ userData.email }}
       </div>
-      <div *ngIf="!tripReview.get('name')!.valid">
-        Nazwa wycieczki powinna mieć 1+ znaków
+
+      <div>
+        <label>Nazwa wycieczki:</label>
+        <input id="name" type="text" formControlName="name" />
       </div>
-      <div *ngIf="!tripReview.get('review')!.valid">
-        Recenzja powinna zawierać od 50 do 500 znaków
+
+      <div>
+        <label for="review">Treść recenzji</label>
+        <textarea
+          id="review"
+          type="text"
+          formControlName="review"
+          cols="60"
+          rows="5"
+        ></textarea>
       </div>
-    </div>
-  </form>
+
+      <div>
+        <label for="date">Data wycieczki:</label>
+        <input id="date" type="date" formControlName="date" />
+      </div>
+
+      <!-- <button type="submit" [disabled]="!tripReview.valid" (click)="submitForm()"> -->
+      <button type="submit" (click)="submitForm()">Dodaj recenzję</button>
+      <div class="errors" *ngIf="clicked">
+        <!-- <div *ngIf="!tripReview.get('nick')!.valid">
+          Nick powinien mieć 1+ znaków
+        </div> -->
+        <div *ngIf="!tripReview.get('name')!.valid">
+          Nazwa wycieczki powinna mieć 1+ znaków
+        </div>
+        <div *ngIf="!tripReview.get('review')!.valid">
+          Recenzja powinna zawierać od 50 do 500 znaków
+        </div>
+      </div>
+    </form>
+  </ng-container>
 </div>

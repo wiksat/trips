@@ -12,11 +12,21 @@
         <div class="buttonsToPhoto">
           <div class="np" (click)="previousPhoto()"><</div>
           <!-- <br /> -->
+          <div class="break"></div>
           <div class="np" (click)="nextPhoto()">></div>
         </div>
       </div>
       <div class="second">
-        <h1>{{ currentTrip.name | uppercase }}</h1>
+        <h1>
+          {{ currentTrip.name | uppercase }}
+          <div
+            class="kolko"
+            [ngStyle]="{
+              'background-color': isTime(currentTrip) ? 'green' : 'yellow'
+            }"
+          ></div>
+        </h1>
+
         <h2>{{ currentTrip.country | uppercase }}</h2>
         <p>{{ currentTrip.desc }}</p>
         <p class="date">
@@ -27,6 +37,7 @@
           (ratingChanged)="ratingEventHandler(currentTrip, $event)"
           [amountPoints]="currentTrip.amountPoints"
           [amountVote]="currentTrip.amountVote"
+          [czy]="czy"
         ></app-rate>
         <p>Pozostało miejsc: {{ currentTrip.amount - howManyChose }}</p>
         <p>Wybrano: {{ howManyChose }}</p>
@@ -77,7 +88,11 @@
           </div>
         </div>
 
-        <app-review (newReviewEvent)="addReview($event)"></app-review>
+        <app-review
+          *ngIf="userData != null"
+          [czy]="czy"
+          (newReviewEvent)="addReview($event)"
+        ></app-review>
       </div>
     </div>
   </ng-container>

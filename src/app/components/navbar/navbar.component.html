@@ -1,21 +1,70 @@
 <div class="box">
-  <a routerLink="/cart"
-    ><div class="cart">
-      <div>
-        <img src="/assets/images/shopping-cart.png" width="50px" alt="" />
-      </div>
-      <p>{{ ile() }}</p>
-    </div></a
-  >
+  <div
+    *ngIf="tripsArray"
+    class="kolko"
+    [ngStyle]="{
+      'background-color': isTime() ? 'green' : 'yellow'
+    }"
+  ></div>
   <div class="menu-horizontal">
-    <a routerLink="/"><div class="item">Home</div></a>
-    <a routerLink="/trips"><div class="item">Wycieczki</div></a>
-    <a routerLink="/about"><div class="item">About</div></a>
-    <a routerLink="/add"><div class="item">Add</div></a>
+    <a routerLink="/cart" class="cartA" *ngIf="auth.userData != null"
+      ><div class="cart">
+        <div>
+          <img src="/assets/images/shopping-cart.png" width="50px" alt="" />
+        </div>
+
+        <p *ngIf="tripsArray">{{ ile() }}</p>
+        <p *ngIf="tripsArray">{{ ile2() }} zł</p>
+      </div></a
+    >
+    <a routerLink="/"><div class="itemH">Home</div></a>
+    <a routerLink="/trips"><div class="itemH">Wycieczki</div></a>
+    <a routerLink="/about"><div class="itemH">About</div></a>
+    <!-- <a routerLink="/add"><div class="itemH">Add</div></a> -->
+    <a routerLink="/login" *ngIf="auth.userData == null">
+      <div class="itemH" routerLinkActive="active-link">Log in</div>
+    </a>
+    <a routerLink="/signUp" *ngIf="auth.userData == null">
+      <div class="itemH" routerLinkActive="active-link">Sign Up</div>
+    </a>
+    <a routerLink="/info" *ngIf="auth.userData != null">
+      <div class="itemH" routerLinkActive="active-link">
+        Witaj {{ auth.userData.email }}
+      </div>
+    </a>
+    <!-- <div *ngIf="auth.userRoles != null"> -->
+    <a
+      *ngIf="auth.userRoles != null && auth.userRoles.admin"
+      routerLink="admin"
+    >
+      <div class="itemH" routerLinkActive="active-link">Admin mode</div>
+    </a>
+    <a
+      *ngIf="auth.userRoles != null && auth.userRoles.menager"
+      routerLink="manager"
+    >
+      <div class="itemH" routerLinkActive="active-link">Manager mode</div>
+    </a>
+    <!-- </div> -->
+    <div class="like-a">
+      <div class="itemH" (click)="auth.signOut()" *ngIf="auth.userData != null">
+        Log out
+      </div>
+    </div>
   </div>
 
   <div class="menu-vertical">
     <div class="container">
+      <a routerLink="/cart" class="cartA"
+        ><div class="cart">
+          <div>
+            <img src="/assets/images/shopping-cart.png" width="50px" alt="" />
+          </div>
+
+          <p *ngIf="tripsArray">{{ ile() }}</p>
+          <p *ngIf="tripsArray">{{ ile2() }} zł</p>
+        </div></a
+      >
       <input class="checkbox" type="checkbox" name="" id="" />
       <div class="hamburger-lines">
         <span class="line line1"></span>
@@ -33,8 +82,54 @@
           <a routerLink="/about"><div class="item">About</div></a>
         </li>
         <li>
-          <a routerLink="/add"><div class="item">Add</div></a>
+          <a routerLink="/login" *ngIf="auth.userData == null">
+            <div class="item" routerLinkActive="active-link">Log in</div>
+          </a>
         </li>
+        <li>
+          <a routerLink="/signUp" *ngIf="auth.userData == null">
+            <div class="item" routerLinkActive="active-link">Sign Up</div>
+          </a>
+        </li>
+        <li>
+          <a routerLink="/info" *ngIf="auth.userData != null">
+            <div class="item" routerLinkActive="active-link">
+              Witaj {{ auth.userData.email }}
+            </div>
+          </a>
+        </li>
+        <li>
+          <!-- <div *ngIf="auth.userRoles != null"> -->
+          <a
+            *ngIf="auth.userRoles != null && auth.userRoles.admin"
+            routerLink="admin"
+          >
+            <div class="item" routerLinkActive="active-link">Admin mode</div>
+          </a>
+        </li>
+        <li>
+          <a
+            *ngIf="auth.userRoles != null && auth.userRoles.menager"
+            routerLink="manager"
+          >
+            <div class="item" routerLinkActive="active-link">Manager mode</div>
+          </a>
+        </li>
+        <li>
+          <!-- </div> -->
+          <div class="like-a">
+            <div
+              class="item"
+              (click)="auth.signOut()"
+              *ngIf="auth.userData != null"
+            >
+              Log out
+            </div>
+          </div>
+        </li>
+        <!-- <li>
+          <a routerLink="/add"><div class="item">Add</div></a>
+        </li> -->
       </div>
     </div>
   </div>

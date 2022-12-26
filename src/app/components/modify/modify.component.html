@@ -1,0 +1,75 @@
+<a routerLink="/manager"><---Powrót do "Manager mode"</a>
+<div class="outer-form">
+  <h2>Modyfikuj wycieczkę</h2>
+  <form [formGroup]="tripAddForm">
+    <div>
+      <label for="name">Nazwa wycieczki:</label>
+      <input id="name" type="text" formControlName="tripName" #name />
+    </div>
+
+    <div>
+      <label for="country">Kraj:</label>
+      <input id="country" type="text" formControlName="tripCountry" #country />
+    </div>
+
+    <div>
+      <label for="amount">Liczba miejsc:</label>
+      <input
+        id="amount"
+        type="number"
+        min="1"
+        formControlName="tripAmount"
+        #amount
+      />
+    </div>
+
+    <div>
+      <label for="startDate">Data początku:</label>
+      <input
+        id="startDate"
+        type="date"
+        formControlName="tripStartDate"
+        #startDate
+      />
+    </div>
+
+    <div>
+      <label for="endDate">Data końca:</label>
+      <input id="endDate" type="date" formControlName="tripEndDate" #endDate />
+    </div>
+
+    <div>
+      <label for="price">Cena:</label>
+      <input
+        id="price"
+        type="number"
+        min="1"
+        formControlName="tripPrice"
+        #price
+      />
+    </div>
+
+    <div>
+      <label for="desc">Opis:</label>
+      <input id="desc" type="text" formControlName="tripDesc" #desc />
+    </div>
+
+    <div>
+      <label for="img">Ścieżka do zdj:</label>
+      <input id="img" type="text" formControlName="tripImg" #img />
+    </div>
+    <div>
+      <label for="currency">Waluta:</label>
+      <input
+        id="currency"
+        type="text"
+        formControlName="tripCurrency"
+        #currency
+      />
+    </div>
+
+    <button type="submit" (click)="submitForm()">Dodaj</button>
+    <p *ngIf="showError">Wprowadź poprawne dane!</p>
+    <p *ngIf="showOk">Wycieczka została dodana!</p>
+  </form>
+</div>

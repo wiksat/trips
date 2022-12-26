@@ -1,16 +1,30 @@
 import { Injectable } from '@angular/core';
 import { Trip } from '../ITrip';
+import { FireBaseServiceService } from 'src/app/services/fire-base-service.service';
+// import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CartService {
-  constructor() {}
+  constructor(private fb: FireBaseServiceService) {
+    // auth.getAuthenticated().subscribe((res: any) => {
+    //   // console.log(res);
+    //   if (res != null) {
+    //     // this.fb.getCart(res.uid).subscribe((cart) => {
+    //     //   this.trips = cart as Trip[];
+    //     // });
+    //   } else {
+    //     this.setCart([]);
+    //   }
+    // });
+  }
 
   trips: Trip[] = [];
 
-  setCart(dishes: Trip[]) {
-    this.trips = dishes;
+  setCart(trips: Trip[]) {
+    this.trips = trips;
+    // this.fb.setCart(this.auth.userData.uid, this.trips);
   }
   getCartAmount() {
     return this.trips.length;

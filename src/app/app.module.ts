@@ -20,7 +20,13 @@ import { environment } from '../environments/environment';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { ReviewComponent } from './components/review/review.component';
 import { CartComponent } from './components/cart/cart.component';
-import { HistoryComponent } from './history/history.component';
+import { SignupComponent } from './components/signup/signup.component';
+import { LoginComponent } from './components/login/login.component';
+import { InfoComponent } from './components/info/info.component';
+import { AdminComponent } from './components/admin/admin.component';
+import { ManagerComponent } from './components/manager/manager.component';
+import { ModifyComponent } from './components/modify/modify.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +42,12 @@ import { HistoryComponent } from './history/history.component';
     AboutComponent,
     ReviewComponent,
     CartComponent,
-    HistoryComponent,
+    SignupComponent,
+    LoginComponent,
+    InfoComponent,
+    AdminComponent,
+    ManagerComponent,
+    ModifyComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +57,7 @@ import { HistoryComponent } from './history/history.component';
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFireDatabaseModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

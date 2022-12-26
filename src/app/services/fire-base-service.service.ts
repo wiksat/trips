@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/compat/database';
-import { first, map, Observable } from 'rxjs';
+import { first, map, Observable, firstValueFrom } from 'rxjs';
 import { Trip } from '../ITrip';
 
 @Injectable({
@@ -52,6 +52,39 @@ export class FireBaseServiceService {
       });
     return;
   }
+  update(trip: Trip, id: number) {
+    console.log('odpala update');
+
+    this.db
+      .list('data')
+      .snapshotChanges()
+      .pipe(first())
+      .subscribe((res: any) => {
+        for (let i of res) {
+          if (i.payload.val().id == id) {
+            console.log('wyslano');
+            this.db.list('data').update(i.payload.key, { name: trip.name });
+            this.db.list('data').update(i.payload.key, { img: trip.img });
+            this.db
+              .list('data')
+              .update(i.payload.key, { country: trip.country });
+            this.db.list('data').update(i.payload.key, { amount: trip.amount });
+            this.db
+              .list('data')
+              .update(i.payload.key, { startDate: trip.startDate });
+            this.db
+              .list('data')
+              .update(i.payload.key, { endDate: trip.endDate });
+            this.db.list('data').update(i.payload.key, { desc: trip.desc });
+            this.db.list('data').update(i.payload.key, { price: trip.price });
+            this.db
+              .list('data')
+              .update(i.payload.key, { currency: trip.currency });
+          }
+        }
+      });
+    return;
+  }
   addTrip(trip: Trip) {
     this.db.list('data').push({
       id: trip.id,
@@ -82,5 +115,48 @@ export class FireBaseServiceService {
           }
         }
       });
+  }
+  addNewUser(user: any) {
+    this.db.object('/users/' + user.uid).set({
+      email: user.email,
+      roles: user.roles,
+      history: [],
+      cart: [],
+    });
+  }
+  changeUserRole(uid: string, role: string, value: string) {
+    let change = '{"' + role + '"' + ':' + value + '}';
+    this.db.object('/users/' + uid + '/roles').update(JSON.parse(change));
+  }
+  async getUserRoles(uid: string) {
+    return firstValueFrom(
+      this.db.object('/users/' + uid + '/roles').valueChanges()
+    );
+  }
+  getOrderHistory(uid: string) {
+    return this.db.object('/users/' + uid + '/history').valueChanges();
+  }
+  // setOrderHistory(uid: string) {
+  // try{
+  //   this.db.list('/users/' + uid + '/history').push({items: items, date: new Date().toLocaleDateString()})
+  // }
+  // catch (err){
+  //   window.alert(err)
+  // }
+  // }
+  buy(uid: string, trips: string[]) {
+    this.db
+      .list('/users/' + uid + '/history')
+      .push({ trips: trips, date: new Date().toLocaleDateString() });
+  }
+  getCart(uid: string) {
+    return this.db.object('/users/' + uid + '/cart').valueChanges();
+  }
+  setCart(uid: string, cart: Array<any>) {
+    this.db.object('/users/' + uid + '/cart').remove();
+    this.db.object('/users/' + uid + '/cart').update(cart);
+  }
+  getUsers() {
+    return this.db.list('users').snapshotChanges();
   }
 }

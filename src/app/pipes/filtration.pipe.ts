@@ -42,6 +42,41 @@ export class FiltrationPipe implements PipeTransform {
     });
 
     // return newArray4;
-    return newArray4;
+    // return newArray4;
+
+    // status
+    var newArray5 = newArray4.filter(function (value: any) {
+      if (
+        args[0][6].includes(0) &&
+        args[0][6].includes(1) &&
+        args[0][6].includes(2)
+      ) {
+        return value;
+      }
+      var data = value.startDate;
+      data = data.split('-');
+      var newStartDate = new Date(data[0] + '/' + data[1] + '/' + data[2]);
+      data = value.endDate;
+      data = data.split('-');
+      var newEndDate = new Date(data[0] + '/' + data[1] + '/' + data[2]);
+      var currentDate = new Date();
+      if (args[0][6].includes(0)) {
+        if (newStartDate > currentDate) {
+          return value;
+        }
+      }
+      if (args[0][6].includes(1)) {
+        if (newStartDate < currentDate && currentDate < newEndDate) {
+          return value;
+        }
+      }
+      if (args[0][6].includes(2)) {
+        if (currentDate > newEndDate) {
+          return value;
+        }
+      }
+    });
+
+    return newArray5;
   }
 }

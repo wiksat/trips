@@ -1,0 +1,20 @@
+<div class="out">
+  <div class="in">
+    <h2>Zaloguj się</h2>
+    <form [formGroup]="form">
+      <div>
+        <label for="name">Email:</label>
+        <input id="name" type="text" formControlName="email" />
+      </div>
+
+      <div>
+        <label for="country">Hasło:</label>
+        <input id="country" type="password" formControlName="password" />
+      </div>
+
+      <button type="submit" (click)="submitForm()">Zaloguj się!</button>
+      <p *ngIf="showError">Dane są niepoprawne!</p>
+      <p *ngIf="showOk">OK!</p>
+    </form>
+  </div>
+</div>

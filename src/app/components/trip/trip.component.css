@@ -141,6 +141,16 @@ h3 {
 .filtry {
   display: none;
 }
+.kolko {
+  border-radius: 50px;
+  width: 10px;
+  display: inline-block;
+  height: 10px;
+}
+.prawo {
+  position: relative;
+  right: 0;
+}
 @media (max-width: 1150px) {
   .trip {
     width: 40%;
